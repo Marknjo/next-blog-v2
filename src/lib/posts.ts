@@ -1,7 +1,9 @@
 import fs from 'fs';
 import matter from 'gray-matter';
 import path from 'path';
-const postsDir = path.join(process.cwd(), 'posts');
+const postsDir = path.join(process.cwd(), 'src', 'posts');
+
+console.log(postsDir);
 
 export default function getSortedPostsData() {
   // get file names unde /posts
