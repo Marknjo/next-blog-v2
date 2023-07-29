@@ -3,11 +3,21 @@ import getSortedPostsData, { getPostData } from '@/lib/posts';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
+export const revalidate = 86400;
+
 type Props = {
   params: {
     slug: string;
   };
 };
+
+export function generateStaticParams() {
+  const posts = getSortedPostsData();
+
+  return posts.map((post) => ({
+    slug: post.id,
+  }));
+}
 
 export function generateMetadata({ params }: Props) {
   const posts = getSortedPostsData();
