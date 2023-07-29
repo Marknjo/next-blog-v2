@@ -9,6 +9,22 @@ type Props = {
   };
 };
 
+export function generateMetadata({ params }: Props) {
+  const posts = getSortedPostsData();
+
+  const { slug } = params;
+  const foundPost = posts.find((post) => post.id === slug);
+
+  if (!slug || !foundPost)
+    return {
+      title: 'Post Not Found',
+    };
+
+  return {
+    title: foundPost.title,
+  };
+}
+
 export default async function Post({ params }: Props) {
   const posts = getSortedPostsData();
 
