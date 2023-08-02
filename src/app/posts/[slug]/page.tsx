@@ -1,5 +1,5 @@
 import formatDate from '@/lib/formatDate';
-import getSortedPostsData, { getPostData } from '@/lib/posts';
+import getSortedPostsData, { getPostData } from '@/lib/posts.v2';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 

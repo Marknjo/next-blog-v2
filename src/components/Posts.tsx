@@ -1,4 +1,4 @@
-import getSortedPostsData from '@/lib/posts';
+import getSortedPostsData from '@/lib/posts.v2';
 import PostList from './PostList';
 
 export default function Posts() {
