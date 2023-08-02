@@ -2,7 +2,6 @@ import Navbar from '@/components/Navbar';
 import './globals.css';
 import type { Metadata } from 'next';
 import { Atkinson_Hyperlegible } from 'next/font/google';
-import ProfileImg from '@/components/ProfileImg';
 
 const Atkinson = Atkinson_Hyperlegible({
   weight: ['400', '700'],
@@ -23,8 +22,10 @@ export default function RootLayout({
     <html lang='en' className='dark'>
       <body className={`${Atkinson.className} dark:bg-slate-800`}>
         <Navbar />
-        <ProfileImg />
-        {children}
+
+        <main className='px-4 md:px-6 prose prose-xl prose-slate dark:prose-invert mx-auto'>
+          {children}
+        </main>
       </body>
     </html>
   );

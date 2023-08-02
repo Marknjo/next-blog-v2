@@ -1,8 +1,11 @@
 import Posts from '@/components/Posts';
+import ProfileImg from '@/components/ProfileImg';
 
 export default function Home() {
   return (
-    <main className='px-6 mx-auto'>
+    <div className='mx-auto'>
+      <ProfileImg />
+
       <p className='mt-12 mb-12 text-3xl text-center dark:text-white'>
         Hello and welcome 👋&nbsp;
         <span className='whitespace-nowrap'>
@@ -11,6 +14,6 @@ export default function Home() {
       </p>
 
       <Posts />
-    </main>
+    </div>
   );
 }

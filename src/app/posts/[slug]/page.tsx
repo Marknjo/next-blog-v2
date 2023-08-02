@@ -46,7 +46,7 @@ export default async function Post({ params }: Props) {
   const pubDate = formatDate(date);
 
   return (
-    <main className='px-6 prose prose-xl prose-slate dark:prose-invert mx-auto'>
+    <div className='mx-auto'>
       <h1 className='text-3xl mt-4 mb-0'>{title}</h1>
       <p className='mt-0'>{pubDate}</p>
       <article>
@@ -56,6 +56,6 @@ export default async function Post({ params }: Props) {
           <Link href='/'>&larr; Back to Home</Link>
         </p>
       </article>
-    </main>
+    </div>
   );
 }
