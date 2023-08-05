@@ -1,10 +1,11 @@
 import formatDate from '@/lib/formatDate';
 import Link from 'next/link';
+import { Meta } from '../../types';
 
 type Props = {
-  post: Post;
+  post: Meta;
 };
-export default function PostList({ post }: Props) {
+export default function PostItem({ post }: Props) {
   return (
     <li className='mt-4 text-2xl dark:text-white/90'>
       <Link

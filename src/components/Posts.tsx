@@ -1,5 +1,5 @@
 import { getPostsMeta } from '@/lib/posts';
-import PostList from './PostList';
+import PostItem from './PostItem';
 
 export default async function Posts() {
   const posts = await getPostsMeta();
@@ -14,7 +14,7 @@ export default async function Posts() {
 
       <ul className='w-full list-none p-0'>
         {posts.map((post) => (
-          <PostList key={post.id} post={post} />
+          <PostItem key={post.id} post={post} />
         ))}
       </ul>
     </section>
