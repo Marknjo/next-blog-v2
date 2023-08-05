@@ -1,9 +1,9 @@
 import formatDate from '@/lib/formatDate';
-import getSortedPostsData, { getPostData } from '@/lib/posts.v2';
+import { getPostByName, getPostsMeta } from '@/lib/posts';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
-export const revalidate = 86400;
+export const revalidate = 0; //86400;
 
 type Props = {
   params: {
@@ -11,51 +11,57 @@ type Props = {
   };
 };
 
-export function generateStaticParams() {
-  const posts = getSortedPostsData();
+// export async function generateStaticParams() {
+//   const posts = (await getPostsMeta()) || [];
 
-  return posts.map((post) => ({
-    slug: post.id,
-  }));
-}
+//   return posts.map((post) => ({
+//     slug: post.id,
+//   }));
+// }
 
-export function generateMetadata({ params }: Props) {
-  const posts = getSortedPostsData();
+export async function generateMetadata({ params: { slug } }: Props) {
+  const foundPost = await getPostByName(`${slug}.mdx`);
 
-  const { slug } = params;
-  const foundPost = posts.find((post) => post.id === slug);
-
-  if (!slug || !foundPost)
+  if (!foundPost)
     return {
       title: 'Post Not Found',
     };
 
   return {
-    title: foundPost.title,
+    title: foundPost.meta.title,
   };
 }
 
-export default async function Post({ params }: Props) {
-  const posts = getSortedPostsData();
+export default async function Post({ params: { slug } }: Props) {
+  const foundPost = await getPostByName(`${slug}.mdx`);
 
-  const { slug } = params;
+  if (!foundPost) notFound();
 
-  if (!slug || !posts.find((post) => post.id === slug)) notFound();
+  const {
+    meta: { title, date, tags },
+    content,
+  } = foundPost;
 
-  const { title, date, contentHtml } = await getPostData(slug);
   const pubDate = formatDate(date);
 
-  return (
-    <div className='mx-auto'>
-      <h1 className='text-3xl mt-4 mb-0'>{title}</h1>
-      <p className='mt-0'>{pubDate}</p>
-      <article>
-        <section dangerouslySetInnerHTML={{ __html: contentHtml }} />
+  const postTags = tags.map((tag, i) => (
+    <Link href={`/tags/${tag}`} key={`${tag}-${i + 1}`}>
+      {tag}
+    </Link>
+  ));
 
-        <p>
-          <Link href='/'>&larr; Back to Home</Link>
-        </p>
-      </article>
-    </div>
+  return (
+    <>
+      <h2 className='text-3xl mt-4 mb-0'>{title}</h2>
+      <p className='mt-0 text-sm'>{pubDate}</p>
+      <article>{content}</article>
+      <section>
+        <h3>Related:</h3>
+        <div className='flex flex-row gap-4'>{postTags}</div>
+      </section>
+      <p className='mb-10'>
+        <Link href='/'>&larr; Back to Home</Link>
+      </p>
+    </>
   );
 }
