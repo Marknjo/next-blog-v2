@@ -8,14 +8,20 @@ type Props = {
   };
 };
 
-export async function generateStaticParams() {
-  const posts = (await getPostsMeta()) || [];
+// export async function generateStaticParams() {
+//   const posts = (await getPostsMeta()) || [];
 
-  if (posts.length === 0) return [];
+//   if (posts.length === 0) return [];
 
-  const tags = new Set(posts.map((post) => post.tags).flat());
+//   const tags = new Set(posts.map((post) => post.tags).flat());
 
-  return Array.from(tags).map((tag) => ({
-    tag,
-  }));
+//   return Array.from(tags).map((tag) => ({
+//     tag,
+//   }));
+// }
+
+export function generateMetadata({ params: { tag } }: Props) {
+  return {
+    title: `Post about ${tag}`,
+  };
 }
