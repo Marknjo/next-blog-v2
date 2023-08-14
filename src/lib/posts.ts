@@ -1,5 +1,8 @@
 import { compileMDX } from 'next-mdx-remote/rsc';
 import { Meta, Post } from '../../types';
+import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import rehypeHighlight from 'rehype-highlight';
+import rehypeSlug from 'rehype-slug';
 
 type Filetree = {
   tree: [
@@ -33,6 +36,20 @@ export async function getPostByName(
     source: rawMDX,
     options: {
       parseFrontmatter: true,
+      mdxOptions: {
+        rehypePlugins: [
+          /* @ts-ignore: expects not to throw */
+          rehypeHighlight,
+          rehypeSlug,
+          [
+            rehypeAutolinkHeadings,
+            {
+              behavior: 'wrap',
+            },
+          ],
+        ],
+        format: 'mdx',
+      },
     },
   });
 
