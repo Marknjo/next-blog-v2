@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import 'highlight.js/styles/github-dark.css';
 
-export const revalidate = 0; //86400;
+export const revalidate = 10; //86400;
 
 type Props = {
   params: {
@@ -12,13 +12,13 @@ type Props = {
   };
 };
 
-// export async function generateStaticParams() {
-//   const posts = (await getPostsMeta()) || [];
+export async function generateStaticParams() {
+  const posts = (await getPostsMeta()) || [];
 
-//   return posts.map((post) => ({
-//     slug: post.id,
-//   }));
-// }
+  return posts.map((post) => ({
+    slug: post.id,
+  }));
+}
 
 export async function generateMetadata({ params: { slug } }: Props) {
   const foundPost = await getPostByName(`${slug}.mdx`);
